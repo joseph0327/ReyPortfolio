@@ -315,6 +315,99 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* Scroll Animation Classes */
+.skill-card,
+.stat-card,
+.achievement-card,
+.timeline-item,
+.background-card-modern,
+.background-summary,
+.about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.skill-card.animate-in,
+.stat-card.animate-in,
+.achievement-card.animate-in,
+.timeline-item.animate-in,
+.background-card-modern.animate-in,
+.background-summary.animate-in,
+.about-text.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Special animation for stat cards */
+.stat-card {
+    transform: translateY(40px) scale(0.95);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stat-card.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* About text fade in from bottom */
+.about-text {
+    transform: translateY(50px);
+    transition-duration: 1s;
+}
+
+/* Background section animations */
+.background-card-modern {
+    transform: translateY(40px) rotateX(10deg);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.background-card-modern.animate-in {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+}
+
+.background-summary {
+    transform: translateY(50px) scale(0.97);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.background-summary.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Contact section animations */
+.contact-subtitle {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.contact-subtitle.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-item {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.contact-item.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 /* Section Styles */
 section {
     padding: 80px 0;
@@ -1333,79 +1426,436 @@ section {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .section-title {
+        font-size: 2.5rem;
+        gap: 1.5rem;
+    }
+
+    .section-title::before,
+    .section-title::after {
+        width: 80px;
+        height: 80px;
+    }
+
+    .background-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Hide large background SVGs on tablets */
+    .about::after,
+    .background::after,
+    .skills::after,
+    .experience::after,
+    .experience .container::before,
+    .experience .container::after,
+    .achievements::after,
+    .contact::after {
+        opacity: 0.1;
+        width: 300px;
+        height: 250px;
+    }
+}
+
 @media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding: 120px 0 80px;
+        min-height: auto;
+    }
+
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .hero-subtitle {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+    }
+
+    .hero-background {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-background p {
+        line-height: 1.9;
+    }
+
+    .hero-background strong {
+        margin: 0.3rem 0.25rem;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.95rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
     }
 
     .hero-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
     }
 
+    .btn {
+        padding: 0.75rem 1.75rem;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+    }
+
+    /* Navigation */
     .nav-menu {
         display: none;
     }
 
-    .contact-content {
-        grid-template-columns: 1fr;
+    .nav-brand {
+        font-size: 1.25rem;
     }
 
+    /* Section Titles */
+    .section-title {
+        font-size: 2rem;
+        gap: 1rem;
+        flex-direction: column;
+        margin-bottom: 3rem;
+    }
+
+    .section-title::before,
+    .section-title::after {
+        width: 60px;
+        height: 60px;
+        order: 0;
+    }
+
+    .section-title::after {
+        display: none;
+    }
+
+    .section-title span {
+        order: 1;
+    }
+
+    /* Sections */
+    section {
+        padding: 50px 0;
+    }
+
+    /* About Section */
+    .about-stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 2rem;
+    }
+
+    .stat-card h3 {
+        font-size: 3rem;
+    }
+
+    /* Background Section */
+    .background-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .background-card-modern {
+        padding: 2rem;
+    }
+
+    .background-summary {
+        padding: 2rem;
+    }
+
+    .card-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    /* Skills Section */
     .skills-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
-    .background-content {
-        grid-template-columns: 1fr;
+    .skill-card {
+        padding: 1.75rem;
     }
 
+    .technical-skills {
+        padding: 2rem;
+    }
+
+    .tech-tags-wrapper {
+        margin-bottom: 0.75rem;
+    }
+
+    /* Experience Section */
     .timeline {
-        padding-left: 30px;
+        padding-left: 20px;
     }
 
     .timeline::before {
-        left: 10px;
+        left: 8px;
     }
 
     .timeline-marker {
-        left: -28px;
-        width: 16px;
-        height: 16px;
+        left: -24px;
+        width: 18px;
+        height: 18px;
     }
 
+    .timeline-content {
+        padding: 2rem;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.4rem;
+    }
+
+    /* Achievements Section */
+    .achievements-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .achievement-card {
+        padding: 2rem;
+    }
+
+    .achievement-icon {
+        font-size: 3rem;
+    }
+
+    .achievement-card h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Contact Section */
+    .contact-content {
+        max-width: 100%;
+    }
+
+    .contact-info {
+        max-width: 100%;
+    }
+
+    .contact-item {
+        padding: 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .contact-icon {
+        font-size: 1.75rem;
+    }
+
+    /* Footer */
     .footer .container {
         flex-direction: column;
         gap: 1rem;
     }
 
-    section {
-        padding: 60px 0;
+    .social-links {
+        gap: 1.5rem;
     }
 
-    .section-title {
-        font-size: 2rem;
+    /* Hide background SVGs on mobile */
+    .about::after,
+    .background::after,
+    .skills::after,
+    .experience::after,
+    .experience .container::before,
+    .experience .container::after,
+    .achievements::after,
+    .contact::after {
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
+    /* Hero Section */
+    .hero {
+        padding: 100px 0 60px;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
     .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-background {
+        margin-bottom: 1.25rem;
+    }
+
+    .hero-background p {
+        line-height: 2;
+    }
+
+    .hero-background strong {
+        display: inline-block;
+        margin: 0.35rem 0.2rem;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .section-title::before {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Sections */
+    section {
+        padding: 40px 0;
+    }
+
+    /* About Section */
+    .about-text p {
+        font-size: 1rem;
+    }
+
+    .stat-card h3 {
+        font-size: 2.5rem;
+    }
+
+    /* Background Section */
+    .background-card-modern,
+    .background-summary {
+        padding: 1.5rem;
+    }
+
+    .card-header h3,
+    .summary-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .background-icon {
         font-size: 2rem;
     }
 
-    .about-stats {
+    .edu-degree {
+        font-size: 1rem;
+    }
+
+    .summary-text {
+        font-size: 0.95rem;
+    }
+
+    /* Skills Section */
+    .skill-card {
+        padding: 1.5rem;
+    }
+
+    .skill-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .technical-skills {
+        padding: 1.5rem;
+    }
+
+    .technical-skills h3 {
+        font-size: 1.5rem;
+    }
+
+    .tag {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    /* Experience Section */
+    .timeline {
+        padding-left: 15px;
+    }
+
+    .timeline::before {
+        left: 6px;
+        width: 3px;
+    }
+
+    .timeline-marker {
+        left: -20px;
+        width: 14px;
+        height: 14px;
+        border: 3px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .timeline-content {
+        padding: 1.5rem;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.25rem;
+    }
+
+    .timeline-content li {
+        font-size: 0.9rem;
+    }
+
+    /* Achievements Section */
+    .achievements-grid {
         grid-template-columns: 1fr;
     }
 
-    .achievements-grid {
-        grid-template-columns: 1fr;
+    .achievement-card {
+        padding: 1.75rem;
+    }
+
+    .achievement-icon {
+        font-size: 2.5rem;
+    }
+
+    .achievement-card h3 {
+        font-size: 1.15rem;
+    }
+
+    .achievement-card p {
+        font-size: 0.9rem;
+    }
+
+    /* Contact Section */
+    .contact-subtitle {
+        font-size: 1rem;
+    }
+
+    .contact-item {
+        padding: 1rem;
+    }
+
+    .contact-item h4 {
+        font-size: 0.75rem;
+    }
+
+    .contact-item p,
+    .contact-item a {
+        font-size: 0.9rem;
     }
 }

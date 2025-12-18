@@ -42,19 +42,108 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('animate-in');
         }
     });
 }, observerOptions);
 
 // Observe all cards and timeline items
-document.querySelectorAll('.skill-card, .stat-card, .achievement-card, .timeline-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+document.querySelectorAll('.skill-card, .stat-card, .achievement-card, .timeline-item, .background-card-modern, .background-summary').forEach(el => {
     observer.observe(el);
 });
+
+// Staggered animation for About Me section
+const aboutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // Animate about text
+            const aboutText = entry.target.querySelector('.about-text');
+            if (aboutText) {
+                setTimeout(() => {
+                    aboutText.classList.add('animate-in');
+                }, 100);
+            }
+            
+            // Animate stat cards with stagger
+            const statCards = entry.target.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 200 + (index * 150));
+            });
+            
+            aboutObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+// Observe About section
+const aboutSection = document.querySelector('.about');
+if (aboutSection) {
+    aboutObserver.observe(aboutSection);
+}
+
+// Staggered animation for Professional Background section
+const backgroundObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // Animate background cards in the row with stagger
+            const backgroundCards = entry.target.querySelectorAll('.background-card-modern');
+            backgroundCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 100 + (index * 200));
+            });
+            
+            // Animate background summary after cards
+            const backgroundSummary = entry.target.querySelector('.background-summary');
+            if (backgroundSummary) {
+                setTimeout(() => {
+                    backgroundSummary.classList.add('animate-in');
+                }, 100 + (backgroundCards.length * 200) + 150);
+            }
+            
+            backgroundObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+// Observe Professional Background section
+const backgroundSection = document.querySelector('.background');
+if (backgroundSection) {
+    backgroundObserver.observe(backgroundSection);
+}
+
+// Staggered animation for Contact section (Let's Connect)
+const contactObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // Animate contact subtitle
+            const contactSubtitle = entry.target.querySelector('.contact-subtitle');
+            if (contactSubtitle) {
+                setTimeout(() => {
+                    contactSubtitle.classList.add('animate-in');
+                }, 100);
+            }
+            
+            // Animate contact items with stagger
+            const contactItems = entry.target.querySelectorAll('.contact-item');
+            contactItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate-in');
+                }, 200 + (index * 100));
+            });
+            
+            contactObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 });
+
+// Observe Contact section
+const contactSection = document.querySelector('.contact');
+if (contactSection) {
+    contactObserver.observe(contactSection);
+}
 
 // Form submission handler
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
