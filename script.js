@@ -188,22 +188,30 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Counter animation for stats
+// Counter animation for stats with easing
 const animateCounter = (element, target) => {
-    const duration = 2000;
+    const duration = 1500;
     const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
+    const startTime = performance.now();
 
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+    const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeOutQuart(progress);
+        const current = Math.floor(start + (target - start) * easedProgress);
+
+        element.textContent = current + (element.dataset.suffix || '');
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
         } else {
-            element.textContent = Math.floor(current);
+            element.textContent = target + (element.dataset.suffix || '');
         }
-    }, 16);
+    };
+
+    requestAnimationFrame(animate);
 };
 
 // Trigger counter animation when stats come into view
@@ -215,8 +223,15 @@ const statsObserver = new IntersectionObserver((entries) => {
             const number = parseInt(text.replace(/\D/g, ''));
             
             if (!isNaN(number)) {
-                h3.textContent = '0';
-                animateCounter(h3, number);
+                // Store suffix (like +)
+                const suffix = text.replace(/[0-9]/g, '');
+                h3.dataset.suffix = suffix;
+                h3.textContent = '0' + suffix;
+                
+                // Delay counter to sync with card animation
+                setTimeout(() => {
+                    animateCounter(h3, number);
+                }, 300);
             }
             
             statsObserver.unobserve(entry.target);
